@@ -1,11 +1,21 @@
-FROM php:7.2-fpm
+FROM octava/php7.2-cli
+
+
+# create-user
+RUN adduser dev
 
 COPY php.ini /usr/local/etc/php
 
-# install composer 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-# install php xdebug 
-RUN pecl install xdebug
-# create-user
-RUN adduser dev
+COPY composer.json /home/dev
 COPY test.php /home/dev
+
+COPY launch.json /.vscode/
+
+WORKDIR /home/dev
+# install composer 
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
+    composer install
+
+# enable xdebug 
+RUN docker-php-ext-enable xdebug
+
