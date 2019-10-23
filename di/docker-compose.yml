@@ -1,7 +1,7 @@
 version: "3"
 services: 
   di:
-    container_name: riki_di
+    container_name: test_dev
     build: .
     # volumes:
     #   - D:\mker\dev_env\di\app:/home/dev
